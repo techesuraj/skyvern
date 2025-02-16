@@ -6,7 +6,7 @@ COPY ./entrypoint-skyvernui.sh /app/entrypoint-skyvernui.sh
 RUN npm install
 
 ENV VITE_API_BASE_URL=https://skyvern-production.up.railway.app/api/v1
-ENV VITE_WSS_BASE_URL=wss://skyvern-production.up.railway.app
+ENV VITE_WSS_BASE_URL=ws://skyvern-production.up.railway.app
 ENV VITE_ARTIFACT_API_BASE_URL=https://skyvern-production.up.railway.app
 
 CMD [ "/bin/bash", "/app/entrypoint-skyvernui.sh" ]
