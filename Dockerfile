@@ -1,5 +1,9 @@
 FROM python:3.11 as requirements-stage
-
+RUN apt-get update && apt-get install -y \
+    gcc \
+    python3-dev \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /tmp
 RUN pip install poetry
 RUN poetry self add poetry-plugin-export
