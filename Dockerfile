@@ -1,9 +1,5 @@
 FROM python:3.11 as requirements-stage
-RUN apt-get update && apt-get install -y \
-    gcc \
-    python3-dev \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /tmp
 RUN pip install poetry
 RUN poetry self add poetry-plugin-export
@@ -13,14 +9,8 @@ RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 FROM python:3.11-slim-bookworm
 WORKDIR /app
-RUN apt-get update && apt-get install -y \
-    gcc \
-    python3-dev \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
 COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
-RUN pip install psycopg2-binary
 RUN playwright install-deps
 RUN playwright install
 RUN apt-get install -y xauth x11-apps netpbm curl && apt-get clean
